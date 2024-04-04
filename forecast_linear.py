@@ -8,7 +8,7 @@ data =data.set_index('date')
 X = data[['precipitation','temp_max','temp_min','wind']].values 
 y = data['weather'].values 
 
-def train_test_split(X, y, test_size=0.2, random_state=None):
+def train_test_split(X, y, test_size, random_state=None):
     np.random.seed(random_state)
     shuffled_indices = np.random.permutation(len(X))
     test_set_size = int(len(X) * test_size)
@@ -17,7 +17,7 @@ def train_test_split(X, y, test_size=0.2, random_state=None):
     return X[train_indices], X[test_indices], y[train_indices], y[test_indices]
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 class LinearRegression:
     def __init__(self):
@@ -63,23 +63,3 @@ plt.title('Predictions vs. Test Values')
 plt.grid(True)
 plt.show()
 
-plt.figure(figsize=(8, 6))
-plt.plot(y_pred, label='Predictions', color='blue')
-plt.plot(y_test, label='Test Values', color='red')
-plt.xlabel('Sample')
-plt.ylabel('Target Value')
-plt.title('Test Values vs. Predictions')
-plt.legend()
-plt.grid(True)
-plt.show()
-
-
-residuals = y_test - y_pred
-plt.figure(figsize=(8, 6))
-plt.scatter(y_pred, residuals, color='blue')
-plt.xlabel('Predictions')
-plt.ylabel('Residuals')
-plt.title('Residual Plot')
-plt.axhline(y=0, color='red', linestyle='--')
-plt.grid(True)
-plt.show()
